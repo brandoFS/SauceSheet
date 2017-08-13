@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Font -->
+    <dimen name="font_size_small">10sp</dimen>
+    <dimen name="font_size_small_ish">13sp</dimen>
+    <dimen name="font_size">16sp</dimen>
+    <dimen name="font_size_bigger">18sp</dimen>
+    <dimen name="font_size_button">20sp</dimen>
+    <dimen name="font_size_even_bigger">24sp</dimen>
+    <dimen name="font_size_even_even_bigger">30sp</dimen>
+    <dimen name="font_size_biggest">36sp</dimen>
+
+
+</resources>

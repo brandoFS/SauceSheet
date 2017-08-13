@@ -1,0 +1,12 @@
+<resources>
+
+    <!-- Generic -->
+    <string name="ok">OK</string>
+
+
+    <!-- Errors -->
+    <string name="error">Error</string>
+    <string name="error_retry">Error. Please Retry</string>
+    <string name="app_name">Sheets</string>
+
+</resources>

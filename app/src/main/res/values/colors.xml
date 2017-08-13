@@ -1,0 +1,56 @@
+<resources>
+
+    <!-- Basic Colors -->
+    <color name="c1">#727272</color>
+    <color name="c2">#AAAAAA</color>
+    <color name="c3">#E5E0D3</color>
+    <color name="c4">#E5E5E1</color>
+    <color name="c5">#353F5B</color>
+    <color name="c6">#616A9B</color>
+    <color name="c7">#7786B7</color>
+    <color name="c8">#00BF8F</color>
+    <color name="c9">#FF5867</color>
+    <color name="c10">#5082E5</color>
+    <color name="c11">#2CAFE1</color>
+    <color name="c12">#FFFFFF</color>
+    <color name="c13">#085E45</color>
+    <color name="c14">#4B4B4B</color>
+    <color name="c14_alpha_50">#804B4B4B</color>
+    <color name="c14_alpha_80">#CC4B4B4B</color>
+    <color name="c15">#D2873B</color>
+    <color name="c16">#F9CD46</color>
+
+    <!-- App specific Color labels -->
+    <color name="background_blue">@color/c10</color>
+    <color name="background_cream">@color/c3</color>
+    <color name="background_cream_dark">@color/c1</color>
+    <color name="background_gray">@color/c14_alpha_50</color>
+    <color name="background_green">@color/c8</color>
+    <color name="background_green_transparent">#CC00BF8F</color>
+    <color name="background_green_dark">@color/c13</color>
+    <color name="background_purple">@color/c6</color>
+    <color name="background_purple_dark">@color/c5</color>
+    <color name="background_purple_light">@color/c7</color>
+    <color name="background_main">@color/c4</color>
+    <color name="background_white">@color/c12</color>
+    <color name="background_white_transparent">#CCE5E5E1</color>
+    <color name="background_yellow">@color/c16</color>
+    <color name="background_transparent">@color/c14_alpha_80</color>
+    <color name="black">#000000</color>
+    <color name="divider">@color/c1</color>
+    <color name="font_black">@color/black</color>
+    <color name="font_gray">@color/c14</color>
+    <color name="font_gray_alpha">@color/c14_alpha_50</color>
+    <color name="font_green">@color/c8</color>
+    <color name="font_white">@color/c12</color>
+    <color name="font_red">@color/c9</color>
+    <color name="font_burnt">@color/c15</color>
+    <color name="map">@color/c11</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Primary -->
+    <color name="colorPrimary">@color/c6</color>
+    <color name="colorPrimaryDark">@color/c5</color>
+    <color name="tabsScrollColor">@color/c12</color>
+
+</resources>
