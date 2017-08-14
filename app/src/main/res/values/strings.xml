@@ -8,5 +8,10 @@
     <string name="error">Error</string>
     <string name="error_retry">Error. Please Retry</string>
     <string name="app_name">Sheets</string>
+    <string name="edit">Edit</string>
+    <string name="undo">Undo</string>
+    <string name="reload">Reload</string>
+    <string name="save">Save</string>
+    <string name="clear">Clear</string>
 
 </resources>

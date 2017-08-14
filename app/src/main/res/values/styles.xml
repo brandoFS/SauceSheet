@@ -31,4 +31,8 @@
     <item name="android:textColor">@color/font_green</item>
     </style>
 
+    <style name="menu_labels_style">
+        <item name="android:textColor">@color/font_green</item>
+    </style>
+
 </resources>

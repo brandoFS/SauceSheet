@@ -4,8 +4,8 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "com.rival.recipe"
-        minSdkVersion 15
+        applicationId "com.sauce.sheet"
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -35,5 +35,8 @@ dependencies {
     //Butterknife/View Injection
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+
+    //Action button menu
+    compile 'com.getbase:floatingactionbutton:1.10.1'
 
 }
