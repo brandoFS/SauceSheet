@@ -32,6 +32,7 @@
     </style>
 
     <style name="menu_labels_style">
+        <item name="android:background">@color/background_white</item>
         <item name="android:textColor">@color/font_green</item>
     </style>
 

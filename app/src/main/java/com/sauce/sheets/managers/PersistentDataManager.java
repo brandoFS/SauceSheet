@@ -3,6 +3,10 @@ package com.sauce.sheets.managers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+
+import java.util.List;
+
 
 public class PersistentDataManager {
 
@@ -37,6 +41,21 @@ public class PersistentDataManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, value);
         editor.apply();
+    }
+
+    public void saveArray(String key, List<String> arrayToSave) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String jsonText = gson.toJson(arrayToSave);
+        editor.putString(key, jsonText);
+        editor.apply();
+    }
+
+    public String[] getArray(){
+        Gson gson = new Gson();
+        String jsonText = sharedPreferences.getString("key", null);
+        String[] text = gson.fromJson(jsonText, String[].class);
+        return text;
     }
 
     public void setBoolean(String key, boolean value) {

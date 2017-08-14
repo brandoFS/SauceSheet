@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.sauce.sheets.R;
 import com.sauce.sheets.SheetsApp;
 import com.sauce.sheets.constants.Constants;
@@ -35,6 +36,8 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
     EditText mMainCellEditArea;
     @BindView(R.id.main_header_container)
     LinearLayout mMainHeaderContainer;
+    @BindView(R.id.action_menu)
+    FloatingActionsMenu mActionMenu;
 
     private SheetAdapter mSheetAdapter;
     private GridLayoutManager mGridLayoutManager;
@@ -63,7 +66,6 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
                     mMainCellEditArea.clearFocus();
                     mMainHeaderContainer.requestFocus();
                     mMainCellEditArea.setEnabled(false);
-                    mEditStack.pushEditonStack(new CellData(positionToEdit, mMainCellEditArea.getText().toString().trim()));
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(mMainCellEditArea.getApplicationWindowToken(), 0);
                 }
@@ -114,6 +116,7 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
 
     @Override
     public void editCell(String content, int position) {
+        mEditStack.pushEditonStack(new CellData(position, content));
         positionToEdit = position;
         mMainCellEditArea.setEnabled(true);
         mMainCellEditArea.requestFocus();
@@ -121,12 +124,10 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
         mMainCellEditArea.setSelection(mMainCellEditArea.getText().length());
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(mMainCellEditArea, InputMethodManager.SHOW_IMPLICIT);
-        // mSheetAdapter.
-        Toast.makeText(this, "position = " + position, Toast.LENGTH_SHORT).show();
 
     }
 
-    @OnClick({R.id.main_add_column_button, R.id.main_add_row_button})
+    @OnClick({R.id.main_add_column_button, R.id.main_add_row_button, R.id.action_save, R.id.action_clear, R.id.action_load, R.id.action_undo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.main_add_column_button:
@@ -135,6 +136,33 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
             case R.id.main_add_row_button:
                 mSheetAdapter.AddRowOfCells(mGridLayoutManager.getSpanCount());
                 break;
+            case R.id.action_save:
+                saveCurrentSheet();
+                mActionMenu.collapse();
+                break;
+            case R.id.action_clear:
+                mActionMenu.collapse();
+                mSheetAdapter = new SheetAdapter(this, this, Constants.INTIAL_SIZE);
+                mGridLayoutManager = new GridLayoutManager(this, Constants.NUM_OF_COLUMNS, GridLayoutManager.VERTICAL, false);
+                mRecyclerView.setLayoutManager(mGridLayoutManager);
+                mRecyclerView.setAdapter(mSheetAdapter);
+                mEditStack.clearStack();
+                break;
+            case R.id.action_load:
+                mActionMenu.collapse();
+                break;
+            case R.id.action_undo:
+                if (!mEditStack.isStackEmpty()) {
+                    CellData undoEdit = mEditStack.popLastEdit();
+                    mSheetAdapter.setCellContent(undoEdit.getIndex(), undoEdit.getCellContent());
+                } else {
+                    Toast.makeText(this, "Nothing to Undo", Toast.LENGTH_SHORT).show();
+                }
+                mActionMenu.collapse();
+                break;
         }
+    }
+
+    private void saveCurrentSheet() {
     }
 }

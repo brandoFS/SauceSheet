@@ -25,8 +25,12 @@ public class EditStack {
         }
     }
 
-    boolean isStackEmpty() {
+    public boolean isStackEmpty() {
         return editStack.isEmpty();
+    }
+
+    public void clearStack() {
+        editStack.clear();
     }
 
 

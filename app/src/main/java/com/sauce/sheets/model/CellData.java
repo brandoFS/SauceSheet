@@ -6,12 +6,20 @@ package com.sauce.sheets.model;
 
 public class CellData {
 
-    int index;
-    String cellContent;
+    private int index;
+    private String cellContent;
 
     public CellData(int position, String data) {
         this.index = position;
         this.cellContent = data;
+    }
+
+    public int getIndex(){
+        return index;
+    }
+
+    public String getCellContent(){
+        return  cellContent;
     }
 
 }

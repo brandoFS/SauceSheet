@@ -67,7 +67,7 @@
 
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/multiple_actions"
+        android:id="@+id/action_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -89,6 +89,7 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/font_green"
             fab:fab_title="@string/save"
+            app:fab_icon="@drawable/ic_save_white_18dp"
             fab:fab_colorPressed="@color/background_white"/>
 
 
@@ -98,6 +99,7 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/font_green"
             fab:fab_title="@string/clear"
+            app:fab_icon="@drawable/ic_delete_sweep_white_18dp"
             fab:fab_colorPressed="@color/background_white"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -106,6 +108,7 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/font_green"
             fab:fab_title="@string/reload"
+            app:fab_icon="@drawable/ic_refresh_white_18dp"
             fab:fab_colorPressed="@color/background_white"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -114,6 +117,7 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/font_green"
             fab:fab_title="@string/undo"
+            app:fab_icon="@drawable/ic_undo_white_18dp"
             fab:fab_colorPressed="@color/background_white"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
