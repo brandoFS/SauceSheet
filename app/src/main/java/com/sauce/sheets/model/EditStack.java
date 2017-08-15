@@ -32,6 +32,4 @@ public class EditStack {
     public void clearStack() {
         editStack.clear();
     }
-
-
 }

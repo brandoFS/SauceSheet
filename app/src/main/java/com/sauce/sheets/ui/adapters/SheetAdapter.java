@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.sauce.sheets.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by brandomadden on 8/4/17.
@@ -20,7 +21,7 @@ public class SheetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private AdapterCallback adapterCallback;
     private Context context;
-    private ArrayList<String> cellData = new ArrayList<>();
+    private List<String> cellData = new ArrayList<>();
 
     public SheetAdapter(AdapterCallback callback, Context context, int size) {
         adapterCallback = callback;
@@ -28,6 +29,12 @@ public class SheetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         for (int i = 0; i < size; i++) {
             cellData.add(i, "");
         }
+    }
+
+    public SheetAdapter(AdapterCallback callback, Context context, List<String> inputData) {
+        adapterCallback = callback;
+        this.context = context;
+        cellData = inputData;
     }
 
     public interface AdapterCallback {
@@ -66,6 +73,18 @@ public class SheetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
         notifyDataSetChanged();
     }
+
+    public void removeRowOfCells(int columns) {
+        for(int i = 0; i < columns; i++){
+            cellData.remove(cellData.size()-1);
+        }
+        notifyDataSetChanged();
+    }
+
+    public List<String> getCellDataArray() {
+        return cellData;
+    }
+
 
     @Override
     public int getItemCount() {

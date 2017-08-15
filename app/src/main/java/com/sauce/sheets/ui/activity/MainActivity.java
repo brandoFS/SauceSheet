@@ -1,7 +1,9 @@
 package com.sauce.sheets.ui.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -19,9 +21,16 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.sauce.sheets.R;
 import com.sauce.sheets.SheetsApp;
 import com.sauce.sheets.constants.Constants;
+import com.sauce.sheets.managers.PersistentDataManager;
 import com.sauce.sheets.model.CellData;
 import com.sauce.sheets.model.EditStack;
 import com.sauce.sheets.ui.adapters.SheetAdapter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +38,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCallback {
 
+    @Inject
+    PersistentDataManager mPersistentDataManager;
 
     @BindView(R.id.main_recycler_view)
     RecyclerView mRecyclerView;
@@ -53,7 +64,6 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
 
         mSheetAdapter = new SheetAdapter(this, this, Constants.INTIAL_SIZE);
         mGridLayoutManager = new GridLayoutManager(this, Constants.NUM_OF_COLUMNS, GridLayoutManager.VERTICAL, false);
-        //mGridLayoutManager = new GridLayoutManager(this, Constants.NUM_OF_COLUMNS, GridLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mRecyclerView.setAdapter(mSheetAdapter);
 
@@ -73,6 +83,26 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.would_you_like_to_exit)
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     public class SheetsTextWatcher implements TextWatcher, View.OnFocusChangeListener {
@@ -101,13 +131,11 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
             if (!hasFocus) {
-                System.out.println(" ========== HERE ==============  ");
-
+                //TODO not working :(
                 mMainCellEditArea.setEnabled(false);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mMainCellEditArea.getApplicationWindowToken(), 0);
             } else {
-                System.out.println(" ========== HERE 22 ==============  ");
 
             }
         }
@@ -127,14 +155,36 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
 
     }
 
+    private void saveCurrentSheet() {
+        if (mSheetAdapter != null) {
+            mPersistentDataManager.saveArray(Constants.SAVE_KEY, mSheetAdapter.getCellDataArray());
+            Toast.makeText(this, getString(R.string.sheet_saved), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loadLastSheet() {
+        String[] savedData = mPersistentDataManager.getArray(Constants.SAVE_KEY);
+        List<String> loadedData = new ArrayList<>();
+        Collections.addAll(loadedData, savedData);
+        mSheetAdapter = new SheetAdapter(this, this, loadedData);
+        mGridLayoutManager = new GridLayoutManager(this, Constants.NUM_OF_COLUMNS, GridLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mGridLayoutManager);
+        mRecyclerView.setAdapter(mSheetAdapter);
+        mEditStack.clearStack();
+        Toast.makeText(this, getString(R.string.Last_Saved_Sheet_Loaded), Toast.LENGTH_SHORT).show();
+    }
+
     @OnClick({R.id.main_add_column_button, R.id.main_add_row_button, R.id.action_save, R.id.action_clear, R.id.action_load, R.id.action_undo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.main_add_column_button:
                 mGridLayoutManager.setSpanCount(mGridLayoutManager.getSpanCount() + 1);
+                mSheetAdapter.AddRowOfCells((mGridLayoutManager.getSpanCount() * 2) - 1);
+                mEditStack.pushEditonStack(new CellData(-1, Constants.ADD_COLUMN));
                 break;
             case R.id.main_add_row_button:
                 mSheetAdapter.AddRowOfCells(mGridLayoutManager.getSpanCount());
+                mEditStack.pushEditonStack(new CellData(-1, Constants.ADD_ROW));
                 break;
             case R.id.action_save:
                 saveCurrentSheet();
@@ -149,20 +199,28 @@ public class MainActivity extends BaseActivity implements SheetAdapter.AdapterCa
                 mEditStack.clearStack();
                 break;
             case R.id.action_load:
+                loadLastSheet();
                 mActionMenu.collapse();
                 break;
             case R.id.action_undo:
                 if (!mEditStack.isStackEmpty()) {
                     CellData undoEdit = mEditStack.popLastEdit();
-                    mSheetAdapter.setCellContent(undoEdit.getIndex(), undoEdit.getCellContent());
+                    if (undoEdit.getCellContent().matches(Constants.ADD_COLUMN)) {
+                        if (mGridLayoutManager.getSpanCount() > 8) {
+                            mSheetAdapter.removeRowOfCells((mGridLayoutManager.getSpanCount() * 2) - 1);
+                            mGridLayoutManager.setSpanCount(mGridLayoutManager.getSpanCount() - 1);
+                        }
+                    } else if (undoEdit.getCellContent().matches(Constants.ADD_ROW)) {
+                        mSheetAdapter.removeRowOfCells(mGridLayoutManager.getSpanCount());
+                    } else {
+                        mSheetAdapter.setCellContent(undoEdit.getIndex(), undoEdit.getCellContent());
+                    }
                 } else {
-                    Toast.makeText(this, "Nothing to Undo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.nothing_to_undo), Toast.LENGTH_SHORT).show();
                 }
                 mActionMenu.collapse();
                 break;
         }
     }
 
-    private void saveCurrentSheet() {
-    }
 }

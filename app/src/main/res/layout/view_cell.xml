@@ -6,14 +6,17 @@
 
     <TextView
         android:id="@+id/cell_body_textview"
-        android:layout_width="@dimen/cell_size"
-        android:layout_height="@dimen/cell_size"
+        android:layout_width="@dimen/cell_width"
+        android:layout_height="@dimen/cell_height"
         android:padding="5dp"
         android:textSize="@dimen/font_size"
         android:gravity="left|center_vertical"
         android:text="@string/ok"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:scrollHorizontally="true"
+        android:ellipsize="marquee"
+        android:singleLine="true"
         />
 
 

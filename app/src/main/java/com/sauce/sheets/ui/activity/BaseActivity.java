@@ -2,7 +2,6 @@ package com.sauce.sheets.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,17 +31,12 @@ public class BaseActivity extends AppCompatActivity {
         // assign singleton instances to fields
         // We need to cast to `MyApp` in order to get the right method
         ((SheetsApp) getApplication()).getComponent().inject(this);
-
-        // Lock portrait
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mNavigationManager.resetCurrentLauncher(this);
-
     }
 
     @Override

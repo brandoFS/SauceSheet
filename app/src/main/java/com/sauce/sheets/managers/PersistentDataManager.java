@@ -51,9 +51,9 @@ public class PersistentDataManager {
         editor.apply();
     }
 
-    public String[] getArray(){
+    public String[] getArray(String key){
         Gson gson = new Gson();
-        String jsonText = sharedPreferences.getString("key", null);
+        String jsonText = sharedPreferences.getString(key, null);
         String[] text = gson.fromJson(jsonText, String[].class);
         return text;
     }

@@ -41,7 +41,8 @@
             android:layout_margin="10dp"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Add Column" />
+            android:drawableTop="@drawable/ic_add_columns_18dp"
+            android:text="@string/add_column" />
 
         <TextView
             android:id="@+id/main_add_row_button"
@@ -50,7 +51,8 @@
             android:layout_margin="10dp"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Add Row" />
+            android:drawableTop="@drawable/ic_add_rows_18dp"
+            android:text="@string/add_row" />
 
 
     </LinearLayout>
@@ -61,7 +63,7 @@
         android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:background="@color/background_white"
         android:layout_below="@id/main_header_container"/>
 
@@ -99,7 +101,7 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/font_green"
             fab:fab_title="@string/clear"
-            app:fab_icon="@drawable/ic_delete_sweep_white_18dp"
+            app:fab_icon="@drawable/ic_delete_white_18dp"
             fab:fab_colorPressed="@color/background_white"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton

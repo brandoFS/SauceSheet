@@ -2,16 +2,25 @@
 
     <!-- Generic -->
     <string name="ok">OK</string>
-
+    <string name="app_name">Sheets</string>
+    <string name="yes">Yes</string>
+    <string name="would_you_like_to_exit">Would you like to Exit?</string>
+    <string name="no">No</string>
 
     <!-- Errors -->
     <string name="error">Error</string>
     <string name="error_retry">Error. Please Retry</string>
-    <string name="app_name">Sheets</string>
+
+    <!-- Editing -->
     <string name="edit">Edit</string>
     <string name="undo">Undo</string>
     <string name="reload">Reload</string>
     <string name="save">Save</string>
     <string name="clear">Clear</string>
+    <string name="nothing_to_undo">Nothing to Undo</string>
+    <string name="sheet_saved">Sheet Saved!</string>
+    <string name="Last_Saved_Sheet_Loaded">Last Saved Sheet Loaded</string>
+    <string name="add_row">Add Row</string>
+    <string name="add_column">Add Column</string>
 
 </resources>
